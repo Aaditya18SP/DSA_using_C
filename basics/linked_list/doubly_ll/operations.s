@@ -520,6 +520,179 @@ insertIntoASortedDLL:                   # @insertIntoASortedDLL
 	.size	insertIntoASortedDLL, .Lfunc_end5-insertIntoASortedDLL
 	.cfi_endproc
                                         # -- End function
+	.globl	deleteFromBeginningOfDLL        # -- Begin function deleteFromBeginningOfDLL
+	.p2align	4, 0x90
+	.type	deleteFromBeginningOfDLL,@function
+deleteFromBeginningOfDLL:               # @deleteFromBeginningOfDLL
+	.cfi_startproc
+# %bb.0:
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset %rbp, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register %rbp
+	movq	%rdi, -8(%rbp)
+	movq	-8(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, -8(%rbp)
+	movq	-8(%rbp), %rax
+	movq	$0, 16(%rax)
+	movq	-8(%rbp), %rax
+	popq	%rbp
+	.cfi_def_cfa %rsp, 8
+	retq
+.Lfunc_end6:
+	.size	deleteFromBeginningOfDLL, .Lfunc_end6-deleteFromBeginningOfDLL
+	.cfi_endproc
+                                        # -- End function
+	.globl	deleteFromEndOfDLL              # -- Begin function deleteFromEndOfDLL
+	.p2align	4, 0x90
+	.type	deleteFromEndOfDLL,@function
+deleteFromEndOfDLL:                     # @deleteFromEndOfDLL
+	.cfi_startproc
+# %bb.0:
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset %rbp, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register %rbp
+	movq	%rdi, -8(%rbp)
+	movq	-8(%rbp), %rax
+	movq	16(%rax), %rax
+	movq	%rax, -16(%rbp)
+	cmpq	$0, -16(%rbp)
+	je	.LBB7_2
+# %bb.1:
+	movq	-16(%rbp), %rax
+	movq	%rax, -8(%rbp)
+	movq	-8(%rbp), %rax
+	movq	$0, 8(%rax)
+.LBB7_2:
+	movq	-8(%rbp), %rax
+	popq	%rbp
+	.cfi_def_cfa %rsp, 8
+	retq
+.Lfunc_end7:
+	.size	deleteFromEndOfDLL, .Lfunc_end7-deleteFromEndOfDLL
+	.cfi_endproc
+                                        # -- End function
+	.globl	deleteAParticularElement        # -- Begin function deleteAParticularElement
+	.p2align	4, 0x90
+	.type	deleteAParticularElement,@function
+deleteAParticularElement:               # @deleteAParticularElement
+	.cfi_startproc
+# %bb.0:
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset %rbp, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register %rbp
+	subq	$64, %rsp
+	movb	%dl, %al
+	movq	%rdi, -16(%rbp)
+	movq	%rsi, -24(%rbp)
+	movb	%al, -25(%rbp)
+	movl	$16, %edi
+	callq	malloc
+	movq	%rax, -40(%rbp)
+	movq	-16(%rbp), %rcx
+	movq	-40(%rbp), %rax
+	movq	%rcx, (%rax)
+	movq	-24(%rbp), %rcx
+	movq	-40(%rbp), %rax
+	movq	%rcx, 8(%rax)
+	movq	-16(%rbp), %rax
+	movsbl	(%rax), %eax
+	movsbl	-25(%rbp), %ecx
+	cmpl	%ecx, %eax
+	jne	.LBB8_2
+# %bb.1:
+	movq	-16(%rbp), %rdi
+	callq	deleteFromBeginningOfDLL
+	movq	%rax, %rcx
+	movq	-40(%rbp), %rax
+	movq	%rcx, (%rax)
+	movq	-40(%rbp), %rax
+	movq	%rax, -8(%rbp)
+	jmp	.LBB8_13
+.LBB8_2:
+	movq	-24(%rbp), %rax
+	movsbl	(%rax), %eax
+	movsbl	-25(%rbp), %ecx
+	cmpl	%ecx, %eax
+	jne	.LBB8_4
+# %bb.3:
+	movq	-24(%rbp), %rdi
+	callq	deleteFromEndOfDLL
+	movq	%rax, %rcx
+	movq	-40(%rbp), %rax
+	movq	%rcx, 8(%rax)
+	movq	-40(%rbp), %rax
+	movq	%rax, -8(%rbp)
+	jmp	.LBB8_13
+.LBB8_4:
+	jmp	.LBB8_5
+.LBB8_5:                                # =>This Inner Loop Header: Depth=1
+	xorl	%eax, %eax
+                                        # kill: def $al killed $al killed $eax
+	cmpq	$0, -16(%rbp)
+	movb	%al, -49(%rbp)                  # 1-byte Spill
+	je	.LBB8_7
+# %bb.6:                                #   in Loop: Header=BB8_5 Depth=1
+	movq	-16(%rbp), %rax
+	movsbl	(%rax), %eax
+	movsbl	-25(%rbp), %ecx
+	cmpl	%ecx, %eax
+	setne	%al
+	movb	%al, -49(%rbp)                  # 1-byte Spill
+.LBB8_7:                                #   in Loop: Header=BB8_5 Depth=1
+	movb	-49(%rbp), %al                  # 1-byte Reload
+	testb	$1, %al
+	jne	.LBB8_8
+	jmp	.LBB8_9
+.LBB8_8:                                #   in Loop: Header=BB8_5 Depth=1
+	movq	-16(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, -16(%rbp)
+	jmp	.LBB8_5
+.LBB8_9:
+	cmpq	$0, -16(%rbp)
+	jne	.LBB8_11
+# %bb.10:
+	movabsq	$.L.str.5, %rdi
+	movb	$0, %al
+	callq	printf
+	jmp	.LBB8_12
+.LBB8_11:
+	movq	-16(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, -48(%rbp)
+	movq	-48(%rbp), %rcx
+	movq	-16(%rbp), %rax
+	movq	16(%rax), %rax
+	movq	%rcx, 8(%rax)
+	movq	-16(%rbp), %rax
+	movq	16(%rax), %rcx
+	movq	-48(%rbp), %rax
+	movq	%rcx, 16(%rax)
+	movq	-16(%rbp), %rdi
+	callq	free
+	movabsq	$.L.str.6, %rdi
+	movb	$0, %al
+	callq	printf
+.LBB8_12:
+	movq	-40(%rbp), %rax
+	movq	%rax, -8(%rbp)
+.LBB8_13:
+	movq	-8(%rbp), %rax
+	addq	$64, %rsp
+	popq	%rbp
+	.cfi_def_cfa %rsp, 8
+	retq
+.Lfunc_end8:
+	.size	deleteAParticularElement, .Lfunc_end8-deleteAParticularElement
+	.cfi_endproc
+                                        # -- End function
 	.globl	main                            # -- Begin function main
 	.p2align	4, 0x90
 	.type	main,@function
@@ -536,12 +709,9 @@ main:                                   # @main
 	movq	%rsi, -16(%rbp)
 	callq	createDoublyLL
 	movq	%rax, -24(%rbp)
-	movq	-24(%rbp), %rdi
-	callq	traverseDoublyLL
 	movq	-24(%rbp), %rax
 	movq	(%rax), %rdi
-	movl	$65, %esi
-	callq	insertAtBeginningOfDLL
+	callq	deleteFromBeginningOfDLL
 	movq	%rax, %rcx
 	movq	-24(%rbp), %rax
 	movq	%rcx, (%rax)
@@ -549,8 +719,7 @@ main:                                   # @main
 	callq	traverseDoublyLL
 	movq	-24(%rbp), %rax
 	movq	8(%rax), %rdi
-	movl	$121, %esi
-	callq	insertAtTheEndOfDLL
+	callq	deleteFromEndOfDLL
 	movq	%rax, %rcx
 	movq	-24(%rbp), %rax
 	movq	%rcx, 8(%rax)
@@ -558,17 +727,10 @@ main:                                   # @main
 	callq	traverseDoublyLL
 	movq	-24(%rbp), %rax
 	movq	(%rax), %rdi
-	movl	$109, %esi
-	movl	$100, %edx
-	callq	insertAfterAParticularElement
-	movq	-24(%rbp), %rdi
-	callq	traverseDoublyLL
-	movq	-24(%rbp), %rax
-	movq	(%rax), %rdi
 	movq	-24(%rbp), %rax
 	movq	8(%rax), %rsi
-	movl	$122, %edx
-	callq	insertIntoASortedDLL
+	movl	$98, %edx
+	callq	deleteAParticularElement
 	movq	%rax, -24(%rbp)
 	movq	-24(%rbp), %rdi
 	callq	traverseDoublyLL
@@ -578,8 +740,8 @@ main:                                   # @main
 	popq	%rbp
 	.cfi_def_cfa %rsp, 8
 	retq
-.Lfunc_end6:
-	.size	main, .Lfunc_end6-main
+.Lfunc_end9:
+	.size	main, .Lfunc_end9-main
 	.cfi_endproc
                                         # -- End function
 	.type	.L.str,@object                  # @.str
@@ -608,6 +770,16 @@ main:                                   # @main
 	.asciz	"Couldn't locate the element after which the new element needs to be inserted\n"
 	.size	.L.str.4, 78
 
+	.type	.L.str.5,@object                # @.str.5
+.L.str.5:
+	.asciz	"The element you wanted to delete couldnot be found\n"
+	.size	.L.str.5, 52
+
+	.type	.L.str.6,@object                # @.str.6
+.L.str.6:
+	.asciz	"deleted successfully\n"
+	.size	.L.str.6, 22
+
 	.ident	"clang version 17.0.6 (Fedora 17.0.6-2.fc39)"
 	.section	".note.GNU-stack","",@progbits
 	.addrsig
@@ -620,5 +792,7 @@ main:                                   # @main
 	.addrsig_sym realloc
 	.addrsig_sym insertAtBeginningOfDLL
 	.addrsig_sym insertAtTheEndOfDLL
-	.addrsig_sym insertAfterAParticularElement
-	.addrsig_sym insertIntoASortedDLL
+	.addrsig_sym deleteFromBeginningOfDLL
+	.addrsig_sym deleteFromEndOfDLL
+	.addrsig_sym deleteAParticularElement
+	.addrsig_sym free

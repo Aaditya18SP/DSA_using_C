@@ -176,11 +176,70 @@ Node **insertIntoASortedDLL(Node *headPtr, Node *endPtr, char valueToInsert) {
   return ptrArray;
 }
 
+//
+Node *deleteFromBeginningOfDLL(Node *headPtr) {
+  headPtr = headPtr->next;
+  headPtr->prev = NULL;
+  return headPtr;
+}
+
+//
+Node *deleteFromEndOfDLL(Node *endPtr) {
+  
+    Node* prevElement=endPtr->prev;
+    if(prevElement!=NULL){
+    endPtr = prevElement;
+    endPtr->next = NULL;
+    }
+    
+    return endPtr;
+  
+}
+
+//
+Node **deleteAParticularElement(Node *headPtr, Node *endPtr,
+                                char valueToDelete) {
+
+  Node **ptrArray = (Node **)malloc(2 * sizeof(Node *));
+  ptrArray[0] = headPtr;
+  ptrArray[1] = endPtr;
+
+  if (headPtr->value == valueToDelete) {
+    ptrArray[0] = deleteFromBeginningOfDLL(headPtr);
+    return ptrArray;
+  }
+
+  if (endPtr->value == valueToDelete) {
+    ptrArray[1] = deleteFromEndOfDLL(endPtr);
+    return ptrArray;
+  }
+
+  while (headPtr != NULL && headPtr->value != valueToDelete) {
+    headPtr = headPtr->next;
+  }
+
+  if (headPtr == NULL) {
+    printf("The element you wanted to delete couldnot be found\n");
+  } else {
+    Node *nextElement = headPtr->next;
+    headPtr->prev->next = nextElement;
+    nextElement->prev = headPtr->prev;
+    // i am not actually freeing the headPtr,
+    // i am freeing the element to be deleted.I didnt change the name of
+    // variable and used the same variable to loop as I didnt see the need to
+    // allocate a separate variable for it
+    free(headPtr);
+
+    printf("deleted successfully\n");
+  }
+  return ptrArray;
+}
+
 //////////////////////////////////////////////////////////////////////////MAIN////////////////////////////////////////////////////////////////////////
 int main(int argc, char **argv) {
   Node **ptrArray = createDoublyLL();
 
-  traverseDoublyLL(ptrArray);
+  /*traverseDoublyLL(ptrArray);
 
   ptrArray[0] = insertAtBeginningOfDLL(ptrArray[0], 'A');
   traverseDoublyLL(ptrArray);
@@ -191,6 +250,15 @@ int main(int argc, char **argv) {
   traverseDoublyLL(ptrArray);
 
   ptrArray = insertIntoASortedDLL(ptrArray[0], ptrArray[1], 'z');
+  traverseDoublyLL(ptrArray);*/
+
+  ptrArray[0] = deleteFromBeginningOfDLL(ptrArray[0]);
+  traverseDoublyLL(ptrArray);
+
+  ptrArray[1] = deleteFromEndOfDLL(ptrArray[1]);
+  traverseDoublyLL(ptrArray);
+
+  ptrArray = deleteAParticularElement(ptrArray[0], ptrArray[1], 'b');
   traverseDoublyLL(ptrArray);
   getchar();
 }
