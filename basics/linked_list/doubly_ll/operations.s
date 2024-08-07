@@ -693,6 +693,210 @@ deleteAParticularElement:               # @deleteAParticularElement
 	.size	deleteAParticularElement, .Lfunc_end8-deleteAParticularElement
 	.cfi_endproc
                                         # -- End function
+	.globl	mergeSortedDoublyLL             # -- Begin function mergeSortedDoublyLL
+	.p2align	4, 0x90
+	.type	mergeSortedDoublyLL,@function
+mergeSortedDoublyLL:                    # @mergeSortedDoublyLL
+	.cfi_startproc
+# %bb.0:
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset %rbp, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register %rbp
+	subq	$64, %rsp
+	movq	%rdi, -8(%rbp)
+	movq	%rsi, -16(%rbp)
+	movl	$8, %edi
+	callq	malloc
+	movq	%rax, -24(%rbp)
+	movq	-24(%rbp), %rax
+	movq	$0, 16(%rax)
+	movq	-24(%rbp), %rax
+	movq	$0, 8(%rax)
+	movq	-24(%rbp), %rax
+	movq	%rax, -32(%rbp)
+	movq	$0, -40(%rbp)
+	movq	$0, -48(%rbp)
+	movl	$16, %edi
+	callq	malloc
+	movq	%rax, -56(%rbp)
+.LBB9_1:                                # =>This Inner Loop Header: Depth=1
+	xorl	%eax, %eax
+                                        # kill: def $al killed $al killed $eax
+	cmpq	$0, -8(%rbp)
+	movb	%al, -57(%rbp)                  # 1-byte Spill
+	je	.LBB9_3
+# %bb.2:                                #   in Loop: Header=BB9_1 Depth=1
+	cmpq	$0, -16(%rbp)
+	setne	%al
+	movb	%al, -57(%rbp)                  # 1-byte Spill
+.LBB9_3:                                #   in Loop: Header=BB9_1 Depth=1
+	movb	-57(%rbp), %al                  # 1-byte Reload
+	testb	$1, %al
+	jne	.LBB9_4
+	jmp	.LBB9_12
+.LBB9_4:                                #   in Loop: Header=BB9_1 Depth=1
+	cmpq	$0, -32(%rbp)
+	jne	.LBB9_6
+# %bb.5:                                #   in Loop: Header=BB9_1 Depth=1
+	movl	$24, %edi
+	callq	malloc
+	movq	%rax, -32(%rbp)
+	movq	-32(%rbp), %rax
+	movq	$0, 8(%rax)
+.LBB9_6:                                #   in Loop: Header=BB9_1 Depth=1
+	movq	-8(%rbp), %rax
+	movsbl	(%rax), %eax
+	movq	-16(%rbp), %rcx
+	movsbl	(%rcx), %ecx
+	cmpl	%ecx, %eax
+	jg	.LBB9_8
+# %bb.7:                                #   in Loop: Header=BB9_1 Depth=1
+	movq	-8(%rbp), %rax
+	movb	(%rax), %cl
+	movq	-32(%rbp), %rax
+	movb	%cl, (%rax)
+	movq	-8(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, -8(%rbp)
+	jmp	.LBB9_9
+.LBB9_8:                                #   in Loop: Header=BB9_1 Depth=1
+	movq	-16(%rbp), %rax
+	movb	(%rax), %cl
+	movq	-32(%rbp), %rax
+	movb	%cl, (%rax)
+	movq	-16(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, -16(%rbp)
+.LBB9_9:                                #   in Loop: Header=BB9_1 Depth=1
+	cmpq	$0, -40(%rbp)
+	je	.LBB9_11
+# %bb.10:                               #   in Loop: Header=BB9_1 Depth=1
+	movq	-40(%rbp), %rcx
+	movq	-32(%rbp), %rax
+	movq	%rcx, 16(%rax)
+	movq	-32(%rbp), %rcx
+	movq	-40(%rbp), %rax
+	movq	%rcx, 8(%rax)
+.LBB9_11:                               #   in Loop: Header=BB9_1 Depth=1
+	movq	-32(%rbp), %rax
+	movq	%rax, -40(%rbp)
+	movq	-32(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, -32(%rbp)
+	jmp	.LBB9_1
+.LBB9_12:
+	cmpq	$0, -8(%rbp)
+	jne	.LBB9_21
+# %bb.13:
+	jmp	.LBB9_14
+.LBB9_14:                               # =>This Inner Loop Header: Depth=1
+	cmpq	$0, -16(%rbp)
+	je	.LBB9_20
+# %bb.15:                               #   in Loop: Header=BB9_14 Depth=1
+	cmpq	$0, -32(%rbp)
+	jne	.LBB9_17
+# %bb.16:                               #   in Loop: Header=BB9_14 Depth=1
+	movl	$24, %edi
+	callq	malloc
+	movq	%rax, -32(%rbp)
+	movq	-32(%rbp), %rax
+	movq	$0, 8(%rax)
+.LBB9_17:                               #   in Loop: Header=BB9_14 Depth=1
+	movq	-16(%rbp), %rax
+	movb	(%rax), %cl
+	movq	-32(%rbp), %rax
+	movb	%cl, (%rax)
+	movq	-16(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, -16(%rbp)
+	cmpq	$0, -40(%rbp)
+	je	.LBB9_19
+# %bb.18:                               #   in Loop: Header=BB9_14 Depth=1
+	movq	-40(%rbp), %rcx
+	movq	-32(%rbp), %rax
+	movq	%rcx, 16(%rax)
+	movq	-32(%rbp), %rcx
+	movq	-40(%rbp), %rax
+	movq	%rcx, 8(%rax)
+.LBB9_19:                               #   in Loop: Header=BB9_14 Depth=1
+	movq	-32(%rbp), %rax
+	movq	%rax, -40(%rbp)
+	movq	-32(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, -32(%rbp)
+	jmp	.LBB9_14
+.LBB9_20:
+	movq	-40(%rbp), %rax
+	movq	$0, 8(%rax)
+	movq	-40(%rbp), %rax
+	movq	%rax, -48(%rbp)
+	jmp	.LBB9_31
+.LBB9_21:
+	cmpq	$0, -16(%rbp)
+	jne	.LBB9_30
+# %bb.22:
+	jmp	.LBB9_23
+.LBB9_23:                               # =>This Inner Loop Header: Depth=1
+	cmpq	$0, -8(%rbp)
+	je	.LBB9_29
+# %bb.24:                               #   in Loop: Header=BB9_23 Depth=1
+	cmpq	$0, -32(%rbp)
+	jne	.LBB9_26
+# %bb.25:                               #   in Loop: Header=BB9_23 Depth=1
+	movl	$24, %edi
+	callq	malloc
+	movq	%rax, -32(%rbp)
+	movq	-32(%rbp), %rax
+	movq	$0, 8(%rax)
+.LBB9_26:                               #   in Loop: Header=BB9_23 Depth=1
+	movq	-8(%rbp), %rax
+	movb	(%rax), %cl
+	movq	-32(%rbp), %rax
+	movb	%cl, (%rax)
+	movq	-8(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, -8(%rbp)
+	cmpq	$0, -40(%rbp)
+	je	.LBB9_28
+# %bb.27:                               #   in Loop: Header=BB9_23 Depth=1
+	movq	-40(%rbp), %rcx
+	movq	-32(%rbp), %rax
+	movq	%rcx, 16(%rax)
+	movq	-32(%rbp), %rcx
+	movq	-40(%rbp), %rax
+	movq	%rcx, 8(%rax)
+.LBB9_28:                               #   in Loop: Header=BB9_23 Depth=1
+	movq	-32(%rbp), %rax
+	movq	%rax, -40(%rbp)
+	movq	-32(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, -32(%rbp)
+	jmp	.LBB9_23
+.LBB9_29:
+	movq	-40(%rbp), %rax
+	movq	$0, 8(%rax)
+	movq	-40(%rbp), %rax
+	movq	%rax, -48(%rbp)
+.LBB9_30:
+	jmp	.LBB9_31
+.LBB9_31:
+	movq	-24(%rbp), %rcx
+	movq	-56(%rbp), %rax
+	movq	%rcx, (%rax)
+	movq	-48(%rbp), %rcx
+	movq	-56(%rbp), %rax
+	movq	%rcx, 8(%rax)
+	movq	-56(%rbp), %rax
+	addq	$64, %rsp
+	popq	%rbp
+	.cfi_def_cfa %rsp, 8
+	retq
+.Lfunc_end9:
+	.size	mergeSortedDoublyLL, .Lfunc_end9-mergeSortedDoublyLL
+	.cfi_endproc
+                                        # -- End function
 	.globl	main                            # -- Begin function main
 	.p2align	4, 0x90
 	.type	main,@function
@@ -704,44 +908,29 @@ main:                                   # @main
 	.cfi_offset %rbp, -16
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register %rbp
-	subq	$32, %rsp
+	subq	$48, %rsp
 	movl	%edi, -4(%rbp)
 	movq	%rsi, -16(%rbp)
 	callq	createDoublyLL
 	movq	%rax, -24(%rbp)
+	callq	createDoublyLL
+	movq	%rax, -32(%rbp)
 	movq	-24(%rbp), %rax
 	movq	(%rax), %rdi
-	callq	deleteFromBeginningOfDLL
-	movq	%rax, %rcx
-	movq	-24(%rbp), %rax
-	movq	%rcx, (%rax)
-	movq	-24(%rbp), %rdi
-	callq	traverseDoublyLL
-	movq	-24(%rbp), %rax
-	movq	8(%rax), %rdi
-	callq	deleteFromEndOfDLL
-	movq	%rax, %rcx
-	movq	-24(%rbp), %rax
-	movq	%rcx, 8(%rax)
-	movq	-24(%rbp), %rdi
-	callq	traverseDoublyLL
-	movq	-24(%rbp), %rax
-	movq	(%rax), %rdi
-	movq	-24(%rbp), %rax
-	movq	8(%rax), %rsi
-	movl	$98, %edx
-	callq	deleteAParticularElement
-	movq	%rax, -24(%rbp)
-	movq	-24(%rbp), %rdi
+	movq	-32(%rbp), %rax
+	movq	(%rax), %rsi
+	callq	mergeSortedDoublyLL
+	movq	%rax, -40(%rbp)
+	movq	-40(%rbp), %rdi
 	callq	traverseDoublyLL
 	callq	getchar
 	xorl	%eax, %eax
-	addq	$32, %rsp
+	addq	$48, %rsp
 	popq	%rbp
 	.cfi_def_cfa %rsp, 8
 	retq
-.Lfunc_end9:
-	.size	main, .Lfunc_end9-main
+.Lfunc_end10:
+	.size	main, .Lfunc_end10-main
 	.cfi_endproc
                                         # -- End function
 	.type	.L.str,@object                  # @.str
@@ -794,5 +983,5 @@ main:                                   # @main
 	.addrsig_sym insertAtTheEndOfDLL
 	.addrsig_sym deleteFromBeginningOfDLL
 	.addrsig_sym deleteFromEndOfDLL
-	.addrsig_sym deleteAParticularElement
 	.addrsig_sym free
+	.addrsig_sym mergeSortedDoublyLL

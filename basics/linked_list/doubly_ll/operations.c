@@ -185,15 +185,14 @@ Node *deleteFromBeginningOfDLL(Node *headPtr) {
 
 //
 Node *deleteFromEndOfDLL(Node *endPtr) {
-  
-    Node* prevElement=endPtr->prev;
-    if(prevElement!=NULL){
+
+  Node *prevElement = endPtr->prev;
+  if (prevElement != NULL) {
     endPtr = prevElement;
     endPtr->next = NULL;
-    }
-    
-    return endPtr;
-  
+  }
+
+  return endPtr;
 }
 
 //
@@ -235,9 +234,103 @@ Node **deleteAParticularElement(Node *headPtr, Node *endPtr,
   return ptrArray;
 }
 
+///
+Node **mergeSortedDoublyLL(Node *headPtr1, Node *headPtr2) {
+  // assumption that both linked lists are sorted in ascending order
+  Node *headOfMergedLL = (Node *)malloc(sizeof(Node *));
+  headOfMergedLL->prev = NULL;
+  headOfMergedLL->next = NULL;
+  Node *node = headOfMergedLL;
+  Node *prevNode = NULL;
+
+  Node *endOfMergedLL = NULL;
+  Node **ptrArray = (Node **)malloc(2 * sizeof(Node *));
+
+  while (headPtr1 != NULL && headPtr2 != NULL) {
+
+    // create the node
+    if (node == NULL) {
+      node = (Node *)malloc(sizeof(Node));
+      node->next = NULL;
+    }
+
+    // insert the sorted value
+    if (headPtr1->value <= headPtr2->value) {
+
+      node->value = headPtr1->value;
+      headPtr1 = headPtr1->next;
+    } else {
+      node->value = headPtr2->value;
+      headPtr2 = headPtr2->next;
+    }
+
+    // link the previous and current node
+    if (prevNode != NULL) {
+      node->prev = prevNode;
+      prevNode->next = node;
+    }
+    prevNode = node;
+    node = node->next;
+  }
+
+  // copy second list as it is
+  if (headPtr1 == NULL) {
+    while (headPtr2 != NULL) {
+
+      // create the node
+      if (node == NULL) {
+        node = (Node *)malloc(sizeof(Node));
+        node->next = NULL;
+      }
+      node->value = headPtr2->value;
+      headPtr2 = headPtr2->next;
+
+      // link the previous and current node
+      if (prevNode != NULL) {
+        node->prev = prevNode;
+        prevNode->next = node;
+      }
+      prevNode = node;
+      node = node->next;
+    }
+
+    prevNode->next = NULL;
+    endOfMergedLL = prevNode;
+  }
+
+  else if (headPtr2 == NULL) {
+    while (headPtr1 != NULL) {
+
+      // create the node
+      if (node == NULL) {
+        node = (Node *)malloc(sizeof(Node));
+        node->next = NULL;
+      }
+      node->value = headPtr1->value;
+      headPtr1 = headPtr1->next;
+
+      // link the previous and current node
+      if (prevNode != NULL) {
+        node->prev = prevNode;
+        prevNode->next = node;
+      }
+      prevNode = node;
+      node = node->next;
+    }
+    prevNode->next = NULL;
+    endOfMergedLL = prevNode;
+  }
+
+  // copy first list as it is
+  ptrArray[0] = headOfMergedLL;
+  ptrArray[1] = endOfMergedLL;
+  return ptrArray;
+}
+
 //////////////////////////////////////////////////////////////////////////MAIN////////////////////////////////////////////////////////////////////////
 int main(int argc, char **argv) {
   Node **ptrArray = createDoublyLL();
+  Node **ptrArray2 = createDoublyLL();
 
   /*traverseDoublyLL(ptrArray);
 
@@ -250,8 +343,7 @@ int main(int argc, char **argv) {
   traverseDoublyLL(ptrArray);
 
   ptrArray = insertIntoASortedDLL(ptrArray[0], ptrArray[1], 'z');
-  traverseDoublyLL(ptrArray);*/
-
+  traverseDoublyLL(ptrArray);
   ptrArray[0] = deleteFromBeginningOfDLL(ptrArray[0]);
   traverseDoublyLL(ptrArray);
 
@@ -260,5 +352,10 @@ int main(int argc, char **argv) {
 
   ptrArray = deleteAParticularElement(ptrArray[0], ptrArray[1], 'b');
   traverseDoublyLL(ptrArray);
+
+  */
+
+  Node **mergedPtrArray = mergeSortedDoublyLL(ptrArray[0], ptrArray2[0]);
+  traverseDoublyLL(mergedPtrArray);
   getchar();
 }
